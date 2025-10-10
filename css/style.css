@@ -1,42 +1,32 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f7f7f7;
+}
+
+a { color: inherit; }
+
+header .brand-logo { font-weight: 600; }
+
 main {
-  flex: 1 0 auto;
+  min-height: 70vh;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
-
-/* Надпись (логотип) */
-.brand-logo {
-  font-size: 1.8rem;         /* Размер текста */
-  white-space: nowrap;       /* Запрещает перенос строки */
-  overflow: hidden;          /* Прячет лишнее, если не помещается */
-  text-overflow: ellipsis;   /* Добавляет "..." если текст не влезает */
+.card {
+  border-radius: 12px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
-/* Адаптивность — на маленьких экранах уменьшаем шрифт */
-@media (max-width: 600px) {
-  .brand-logo {
-    font-size: 1.4rem;
-  }
-}
 .page-footer {
-  background-color: #f7f7f7; /* тёмно-серый */
-  width: 100%;
-  padding-top: 20px;
+  margin-top: 40px;
 }
 
-.footer-copyright {
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 100%;
-  padding: 10px 0;
-}
-
-.page-footer .container {
-  max-width: 1200px; /* ограничивает контент по центру */
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+.responsive-img {
+  max-width: 100%;
+  height: auto;
 }
