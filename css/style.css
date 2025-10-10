@@ -25,3 +25,22 @@ html, body {
 main {
   flex: 1 0 auto;
 }
+/* Фон шапки */
+.nav-wrapper {
+  background-color: #263238;
+}
+
+/* Надпись (логотип) */
+.brand-logo {
+  font-size: 1.8rem;         /* Размер текста */
+  white-space: nowrap;       /* Запрещает перенос строки */
+  overflow: hidden;          /* Прячет лишнее, если не помещается */
+  text-overflow: ellipsis;   /* Добавляет "..." если текст не влезает */
+}
+
+/* Адаптивность — на маленьких экранах уменьшаем шрифт */
+@media (max-width: 600px) {
+  .brand-logo {
+    font-size: 1.4rem;
+  }
+}
