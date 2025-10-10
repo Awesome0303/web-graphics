@@ -4,6 +4,7 @@
 
 Учебный проект — сайт про графику в Web (WebP, SVG, Canvas и пр.).  
 Автор: Антонов Григорий
+Фреймворк: Materialize CSS Git: https://github.com/Dogfalo/materialize
 
 ## Запуск локально
 
