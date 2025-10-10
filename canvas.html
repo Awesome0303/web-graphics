@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Canvas — Графика в Web от Антонова Григория</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <nav class="teal">
+      <div class="nav-wrapper container">
+        <a href="index.html" class="brand-logo">Web Graphics</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+          <i class="material-icons">menu</i>
+        </a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="about.html">О графике</a></li>
+          <li><a href="webp.html">WebP</a></li>
+          <li><a href="svg.html">SVG</a></li>
+          <li class="active"><a href="canvas.html">Canvas</a></li>
+          <li><a href="gallery.html">Галерея</a></li>
+          <li><a href="table.html">Таблица</a></li>
+          <li><a href="video.html">Видео</a></li>
+          <li><a href="contact.html">Контакты</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="about.html">О графике</a></li>
+      <li><a href="webp.html">WebP</a></li>
+      <li><a href="svg.html">SVG</a></li>
+      <li><a href="canvas.html">Canvas</a></li>
+      <li><a href="gallery.html">Галерея</a></li>
+      <li><a href="table.html">Таблица</a></li>
+      <li><a href="video.html">Видео</a></li>
+      <li><a href="contact.html">Контакты</a></li>
+    </ul>
+  </header>
+
+<main class="container section">
+
+<div class="row">
+  <div class="col s12 m8">
+    <h1 class="teal-text">Canvas: частицы и интерактивность</h1>
+    <p>Canvas — элемент HTML5, предоставляющий область для программного рисования. Через JavaScript разработчик может управлять пикселями напрямую, создавать фигуры, линии, текст, анимации и даже 3D-графику (при использовании WebGL).</p>
+    <p>В отличие от SVG, Canvas не основан на векторной графике. Он рендерится “на лету” и не сохраняет отдельные элементы сцены — это даёт высокую производительность, особенно при работе с большим количеством объектов.</p>
+    <p>🔸 Преимущества Canvas:
+    Подходит для сложных анимаций и визуализаций,
+    Высокая производительность за счёт рендеринга в реальном времени,
+    Совместим со всеми современными браузерами</p>
+    <p>Примеры использования: интерактивные игры, анимации, визуализация данных, динамические спецэффекты, графические редакторы.</p>
+    <p>Демонстрация более сложной анимации с частицами, реагирующими на движение мыши.</p>
+    <canvas id="particleCanvas" width="800" height="400" style="border:1px solid #ddd;"></canvas>
+  </div>
+  <aside class="col s12 m4">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Ресурсы</span>
+        <ul>
+          <li><a href="https://developer.mozilla.org/ru/docs/Web/API/Canvas_API" target="_blank">MDN Canvas</a></li>
+          <li><a href="https://konvajs.org/" target="_blank">Konva.js</a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var canvas = document.getElementById('particleCanvas');
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  for(var i=0;i<80;i++){
+    particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:(Math.random()-0.5)*1.5, vy:(Math.random()-0.5)*1.5, r:Math.random()*3+1});
+  }
+  var mouse = {x: null, y: null};
+  canvas.addEventListener('mousemove', function(e){mouse.x=e.offsetX; mouse.y=e.offsetY;});
+  canvas.addEventListener('mouseleave', function(){mouse.x=null; mouse.y=null;});
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(var i=0;i<particles.length;i++){
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x<0||p.x>canvas.width)p.vx*=-1;
+      if(p.y<0||p.y>canvas.height)p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle="teal";
+      ctx.fill();
+      // draw line to mouse if close
+      if(mouse.x && mouse.y){
+        var dx = p.x - mouse.x;
+        var dy = p.y - mouse.y;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist<100){
+          ctx.beginPath();
+          ctx.moveTo(p.x,p.y);
+          ctx.lineTo(mouse.x,mouse.y);
+          ctx.strokeStyle='rgba(0,150,136,'+(1-dist/100)+')';
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+});
+</script>
+
+</main>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m6">
+          <h5 class="white-text">О проекте</h5>
+          <p class="grey-text text-lighten-4">Учебный сайт по теме "Графика в Web".</p>
+        </div>
+        <div class="col s12 m4 offset-m2">
+          <h5 class="white-text">Контакты</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="mailto:student@example.com">Email</a></li>
+            <li><a class="grey-text text-lighten-3" href="https://github.com/Awesome0303" target="_blank">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container center-align">
+      © 2025 Антонов Григорий, Все права защищены
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
