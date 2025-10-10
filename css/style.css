@@ -1,10 +1,7 @@
 main {
   flex: 1 0 auto;
 }
-/* Фон шапки */
-.nav-wrapper {
-  background-color: #f7f7f7;
-}
+
 
 /* Надпись (логотип) */
 .brand-logo {
